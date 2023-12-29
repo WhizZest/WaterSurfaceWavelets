@@ -1,6 +1,7 @@
 * Water Surface Wavelets
 
   [[file:img/teaser.gif]]
+  [[file:img/gui.gif]]
 
 ** Installation
 
