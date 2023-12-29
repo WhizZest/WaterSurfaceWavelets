@@ -108,7 +108,7 @@ public:
     ImGui_ImplSDL2_NewFrame(window);
     ImGui::NewFrame();
 
-    ImGui::Begin("Hello, world!");
+    //ImGui::Begin("Hello, world!");
     ImGui::Text("Water Surface Wavelts Demo!");
 
     ImGui::SliderInt("direction", &directionToShow, -1, DIR_NUM - 1);
@@ -124,7 +124,7 @@ public:
       _water_surface->_showTriangulation = triangulation;
     }
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::End();
+    //ImGui::End();
 
     showNavigationHelp();
     //_gui.drawFrame();
