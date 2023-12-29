@@ -16,6 +16,7 @@ find_package(Magnum REQUIRED
   Sdl2Application)
 
 find_package(MagnumIntegration CONFIG REQUIRED ImGui)
+find_package(gl3w CONFIG REQUIRED)
 
 message("ImGui Found: ${ImGUi_FOUND}")
 message("Integration Found: ${MagnumIntegration_ImGui_FOUND}")
@@ -39,7 +40,8 @@ set(VIS_LIBS
   WaveGrid
   Drawables
   WaterSurface
-  SceneBase3D)
+  SceneBase3D
+  unofficial::gl3w::gl3w)
 
 #  _____  _    ____   ____ _____ _____ ____  
 # |_   _|/ \  |  _ \ / ___| ____|_   _/ ___| 
@@ -51,7 +53,10 @@ set(VIS_LIBS
 corrade_add_resource(WaterSurfaceShaders_RCS waterSurface/resources.conf)
 
 # Build Demo
-add_executable(Demo Demo.cpp ${WaterSurfaceShaders_RCS})
+add_executable(Demo Demo.cpp 
+imgui_impl_opengl3.h imgui_impl_opengl3.cpp 
+imgui_impl_sdl.h imgui_impl_sdl.cpp
+${WaterSurfaceShaders_RCS})
 target_link_libraries(Demo ${VIS_LIBS})
 
 # Build Profile Visualizer

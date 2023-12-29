@@ -1,5 +1,6 @@
 
 #include "SceneBase3D.h"
+#include <GL/gl3w.h>
 
 namespace Magnum {
 
@@ -17,6 +18,29 @@ SceneBase3D::SceneBase3D(const Arguments &arguments)
   Renderer::enable(Renderer::Feature::DepthTest);
   Renderer::enable(Renderer::Feature::FaceCulling);
   Renderer::enable(Renderer::Feature::Multisampling);
+  // Initialize OpenGL loader
+#if defined(IMGUI_IMPL_OPENGL_LOADER_GL3W)
+  bool err = gl3wInit() != 0;
+#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLEW)
+  bool err = glewInit() != GLEW_OK;
+#elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
+  bool err = gladLoadGL() == 0;
+#else
+  bool err = false; // If you use IMGUI_IMPL_OPENGL_LOADER_CUSTOM, your loader is likely to requires some form of initialization.
+#endif
+  for (size_t i = 0; i < 1000; i++)
+  {
+    window = SDL_GetWindowFromID(i);
+    if (window != NULL)
+    {
+      // log
+      std::cout << "Window found: " << SDL_GetWindowTitle(window) << ", id:" << i << std::endl;
+      break;
+    }
+  }
+  if (window == NULL)
+    std::cout << "No window found" << std::endl;
+  SDL_GLContext gl_context = SDL_GL_CreateContext(window);
 
   Renderer::setBlendEquation(Renderer::BlendEquation::Add, Renderer::BlendEquation::Add);
   Renderer::setBlendFunction(Renderer::BlendFunction::SourceAlpha, Renderer::BlendFunction::OneMinusSourceAlpha);
@@ -24,7 +48,23 @@ SceneBase3D::SceneBase3D(const Arguments &arguments)
   /* Configure camera */
   viewportEvent(GL::defaultFramebuffer.viewport().size()); // set up camera
   
-  _gui = ImGuiIntegration::Context(Vector2{windowSize()}/dpiScaling(), windowSize(), framebufferSize());
+  //_gui = ImGuiIntegration::Context(Vector2{windowSize()}/dpiScaling(), windowSize(), framebufferSize());
+  // Setup Dear ImGui context
+  IMGUI_CHECKVERSION();
+  ImGui::CreateContext();
+  ImGuiIO &io = ImGui::GetIO();
+  (void)io;
+  // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+  // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+  // Setup Dear ImGui style
+  ImGui::StyleColorsDark();
+  // ImGui::StyleColorsClassic();
+
+  // Setup Platform/Renderer bindings
+  ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+  const char* glsl_version = "#version 130";
+  ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
 void SceneBase3D::drawEvent() {
@@ -80,35 +120,35 @@ void SceneBase3D::viewportEvent(const Vector2i &size) {
 }
 
 void SceneBase3D::keyPressEvent(KeyEvent &event) {
-  if (_gui.handleKeyPressEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleKeyPressEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 
-  if (event.key() == KeyEvent::Key::Esc) {
-    exit();
-  }
+  // if (event.key() == KeyEvent::Key::Esc) {
+  //   exit();
+  // }
 
-  if (event.key() == KeyEvent::Key::F) {
-    _camera.centerToOrigin();
-  }
+  // if (event.key() == KeyEvent::Key::F) {
+  //   _camera.centerToOrigin();
+  // }
 
   redraw();
 }
 
 void SceneBase3D::keyReleaseEvent(KeyEvent &event) {
-  if (_gui.handleKeyReleaseEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleKeyReleaseEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 }
 
 void SceneBase3D::mousePressEvent(MouseEvent &event) {
-  if (_gui.handleMousePressEvent(event)) {
-    std::cout.flush();
-    redraw();
-    return;
-  }
+  // if (_gui.handleMousePressEvent(event)) {
+  //   std::cout.flush();
+  //   redraw();
+  //   return;
+  // }
 
   if (event.button() == MouseEvent::Button::Left) {
     _previousMousePosition = event.position();
@@ -117,20 +157,20 @@ void SceneBase3D::mousePressEvent(MouseEvent &event) {
 }
 
 void SceneBase3D::mouseReleaseEvent(MouseEvent &event) {
-  if (_gui.handleMouseReleaseEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleMouseReleaseEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 
   event.setAccepted();
   redraw();
 }
 
 void SceneBase3D::mouseMoveEvent(MouseMoveEvent &event) {
-  if (_gui.handleMouseMoveEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleMouseMoveEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 
   Vector2i mousePosNew = event.position();
   Vector2i mousePosOld = _previousMousePosition;
@@ -154,17 +194,17 @@ void SceneBase3D::mouseMoveEvent(MouseMoveEvent &event) {
 }
 
 void SceneBase3D::mouseScrollEvent(MouseScrollEvent &event) {
-  if (_gui.handleMouseScrollEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleMouseScrollEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 }
 
 void SceneBase3D::textInputEvent(TextInputEvent &event) {
-  if (_gui.handleTextInputEvent(event)) {
-    redraw();
-    return;
-  }
+  // if (_gui.handleTextInputEvent(event)) {
+  //   redraw();
+  //   return;
+  // }
 }
 
 } // namespace Magnum

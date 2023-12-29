@@ -102,8 +102,13 @@ public:
   }
 
   void drawGui() override {
-    _gui.newFrame();
+    //_gui.newFrame();
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplSDL2_NewFrame(window);
+    ImGui::NewFrame();
 
+    ImGui::Begin("Hello, world!");
     ImGui::Text("Water Surface Wavelts Demo!");
 
     ImGui::SliderInt("direction", &directionToShow, -1, DIR_NUM - 1);
@@ -118,9 +123,13 @@ public:
     if (ImGui::Checkbox("triangulation", &triangulation)) {
       _water_surface->_showTriangulation = triangulation;
     }
+    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    ImGui::End();
 
     showNavigationHelp();
-    _gui.drawFrame();
+    //_gui.drawFrame();
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
   }
 
 private:

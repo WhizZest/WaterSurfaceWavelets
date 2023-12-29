@@ -28,6 +28,8 @@
 #include <imgui.h>
 
 #include "Camera.h"
+#include "../imgui_impl_sdl.h"
+#include "../imgui_impl_opengl3.h"
 
 #include <iostream>
 
@@ -69,6 +71,7 @@ public:
 
   // MagnumImGui _gui;
   ImGuiIntegration::Context _gui{NoCreate};
+  SDL_Window *window = NULL;
 };
 
 } // namespace Magnum
