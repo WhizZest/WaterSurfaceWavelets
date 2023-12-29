@@ -95,11 +95,11 @@ void SceneBase3D::update() {
 }
 
 void SceneBase3D::drawGui() {
-  _gui.newFrame();
+  //_gui.newFrame();
 
-  ImGui::Text("You should override drawGui function!");
+  //ImGui::Text("You should override drawGui function!");
 
-  _gui.drawFrame();
+  //_gui.drawFrame();
 }
 
 void SceneBase3D::showNavigationHelp() const {

@@ -70,7 +70,7 @@ public:
   Camera<Object3D, Scene3D> _camera;
 
   // MagnumImGui _gui;
-  ImGuiIntegration::Context _gui{NoCreate};
+  //ImGuiIntegration::Context _gui{NoCreate};
   SDL_Window *window = NULL;
 };
 
