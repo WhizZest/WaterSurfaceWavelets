@@ -125,13 +125,13 @@ void SceneBase3D::keyPressEvent(KeyEvent &event) {
   //   return;
   // }
 
-  // if (event.key() == KeyEvent::Key::Esc) {
-  //   exit();
-  // }
+  if (event.key() == KeyEvent::Key::Esc) {
+    exit();
+  }
 
-  // if (event.key() == KeyEvent::Key::F) {
-  //   _camera.centerToOrigin();
-  // }
+  if (event.key() == KeyEvent::Key::F) {
+    _camera.centerToOrigin();
+  }
 
   redraw();
 }
