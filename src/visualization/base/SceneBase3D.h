@@ -72,6 +72,7 @@ public:
   // MagnumImGui _gui;
   //ImGuiIntegration::Context _gui{NoCreate};
   SDL_Window *window = NULL;
+  bool bDisturbance = false;
 };
 
 } // namespace Magnum

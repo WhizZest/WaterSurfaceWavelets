@@ -153,6 +153,7 @@ void SceneBase3D::mousePressEvent(MouseEvent &event) {
   if (event.button() == MouseEvent::Button::Left) {
     _previousMousePosition = event.position();
     event.setAccepted();
+    bDisturbance = true;
   }
 }
 
