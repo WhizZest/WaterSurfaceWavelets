@@ -95,10 +95,13 @@ public:
 
     auto[dir, camPos] = _camera.cameraRayCast(
 					      _previousMousePosition, GL::defaultFramebuffer.viewport().size());
-
-    // float t = -camPos.z()/dir.z();
-    // Vector3 pos = camPos + t * dir;
-    // _waveGrid.addPointDisturbance({pos[0],pos[1]}, 0.1);
+    if (bDisturbance)
+    {
+      float t = -camPos.z() / dir.z();
+      Vector3 pos = camPos + t * dir;
+      _waveGrid.addPointDisturbance({pos[0], pos[1]}, 0.1);
+      bDisturbance = false;
+    }
   }
 
   void drawGui() override {
