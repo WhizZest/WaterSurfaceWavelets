@@ -266,6 +266,8 @@ public:
   Real m_time;
 
   Environment m_enviroment;
+
+  int   m_directionToShow    = -1;
 };
 
 } // namespace WaterWavelets

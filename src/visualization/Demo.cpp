@@ -33,7 +33,6 @@ int   visGridResolution  = 100;
 float amplitudeMult      = 4.0;
 bool  update_screen_grid = true;
 float logdt              = -0.9;
-int   directionToShow    = -1;
 
 class Scene3D : public SceneBase3D {
 public:
@@ -78,7 +77,7 @@ public:
           float theta = _waveGrid.idxToPos(itheta, WaveGrid::Theta);
           Vec4  pos4{v.position.x(), v.position.y(), theta,
                     _waveGrid.idxToPos(0, WaveGrid::Zeta)};
-          if (directionToShow == -1 || directionToShow == itheta)
+          if (_waveGrid.m_directionToShow == -1 || _waveGrid.m_directionToShow == itheta)
             v.amplitude[itheta] = amplitudeMult * _waveGrid.amplitude(pos4);
           else
             v.amplitude[itheta] = 0;
@@ -114,7 +113,7 @@ public:
     //ImGui::Begin("Hello, world!");
     ImGui::Text("Water Surface Wavelts Demo!");
 
-    ImGui::SliderInt("direction", &directionToShow, -1, DIR_NUM - 1);
+    ImGui::SliderInt("direction", &_waveGrid.m_directionToShow, -1, DIR_NUM - 1);
     ImGui::SliderFloat("amplitude", &amplitudeMult, 0, 20);
     ImGui::SliderFloat("log(dt)", &logdt, -2, 2);
     ImGui::DragFloat("time", &_waveGrid.m_time);
