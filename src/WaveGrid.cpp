@@ -164,6 +164,10 @@ void WaveGrid::addPointDisturbance(const Vec2 pos, const Real val) {
       m_amplitude(ix, iy, itheta, 0) += val;
     }
   }
+  else
+  {
+    std::cout << "Warning: point outside grid: (" << pos[X] << "," << pos[Y] << ")" << std::endl;
+  }
 }
 
 void WaveGrid::advectionStep(const Real dt) {
@@ -366,8 +370,10 @@ Vec2 WaveGrid::groupVelocity(Vec4 pos4) const {
 }
 
 Real WaveGrid::defaultAmplitude(const int itheta, const int izeta) const {
-  if (itheta == 5 * gridDim(Theta) / 16)
+  if (itheta == m_directionToShow)
     return 0.1;
+  else if (m_directionToShow == -1)
+    return 0.01;
   return 0.0;
 }
 
